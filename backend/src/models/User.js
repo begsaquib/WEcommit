@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       maxlength: 32,
     },
+    userName:{
+      type :String,
+      maxlength:12,
+      unique:true,
+    },
     emailId: {
       type: String,
       required: true,
@@ -31,27 +36,10 @@ const userSchema = new mongoose.Schema(
         if (!validator.isStrongPassword(value)) {
           throw new Error("Enter a strong password :" + value);
         }
-      }
-    },
-    age: {
-      type: Number,
-      min: 18,
-    },
-    gender: {
-      type: String,
-      validate(value) {
-        if (!["male", "female", "others"].includes(value.toLowerCase())) {
-          throw new Error("Gender is not valid");
-        }
       },
     },
-    skill: {
-      type: [String],
-    },
-    about: {
-      type: String,
-      default: "This is default description of the user",
-    },
+   
+
   },
   {
     timestamps: true,

@@ -8,12 +8,10 @@ const teamSchema = new mongoose.Schema({
     unique: true,
   },
   members: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Reference to the User model
+    type: String,
   }],
   creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
     required: true,
   },
 }, { timestamps: true });
