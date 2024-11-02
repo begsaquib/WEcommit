@@ -1,7 +1,7 @@
 
 
 import { useState } from "react";
-import Header from "./header";
+
 import { Link } from "react-router-dom";
 
 
@@ -23,7 +23,7 @@ const Login = () => {
   return (
 
        <div>
-        <Header></Header>
+       
     <div className="flex items-center justify-center h-screen bg-blue-600">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md">
         <h2 className="mb-6 text-2xl font-bold">Login</h2>

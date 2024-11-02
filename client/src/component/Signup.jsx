@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "./header";
+
 import { Link } from "react-router-dom";
 
 const SignupPage = () => {
@@ -24,7 +24,7 @@ const SignupPage = () => {
 
   return (
      <div>
-        <Header/>
+       
     <div className="min-h-screen flex items-center justify-center bg-blue-400">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
