@@ -1,35 +1,56 @@
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"; // Import Outlet
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Login from "./component/login";
 import SignupPage from "./component/Signup";
 import { Provider } from "react-redux";
 import store from "./utils/store";
 import Header from "./component/header";
 import Home from "./component/homepage";
-import TeamInfo from "./component/teamInfo";
+import TeamInfoPage from "./component/teamInfoPage";
+import ProtectedRoute from "./component/ProtectedRout";
 
-// Create the router structure
+const LayoutWithHeader = () => (
+  <div>
+    <Header />
+    <Outlet />
+  </div>
+);
+
+const LayoutWithoutHeader = () => <Outlet />;
+
 const appRouter = createBrowserRouter([
   {
-    path: "/", // Root path
-    element: (
-      <div>
-        <Header /> {/* Header will show on all pages */}
-        <Outlet /> {/* This is where child routes will be rendered */}
-      </div>
-    ),
+    path: "/",
+    element: <LayoutWithoutHeader />, // No header for login and signup
     children: [
-      { path: "/", element: <Login /> }, // Login page
       {
-        path: "signup", // Signup page path
+        path: "/",
+        element: <Login />,
+      },
+      {
+        path: "signup",
         element: <SignupPage />,
       },
+    ],
+  },
+  {
+    path: "/",
+    element: <LayoutWithHeader />, // Header will appear on these routes
+    children: [
       {
-        path: "/home", // Route for the home page
-        element: <Home />, // Render the Home component here
+        path: "/home",
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ), 
       },
       {
-        path: "/team/:teamName", // Route for team info with dynamic team name
-        element: <TeamInfo />,
+        path: "team/:teamname",
+        element: (
+          <ProtectedRoute>
+            <TeamInfoPage />
+          </ProtectedRoute>
+        ), // Protect the Team Info route
       },
     ],
   },
@@ -38,7 +59,7 @@ const appRouter = createBrowserRouter([
 function App() {
   return (
     <Provider store={store}>
-      <RouterProvider router={appRouter} /> {/* Use RouterProvider to handle routing */}
+      <RouterProvider router={appRouter} />
     </Provider>
   );
 }

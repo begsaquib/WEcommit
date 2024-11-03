@@ -8,14 +8,17 @@ const jwt = require("jsonwebtoken");
 const { userAuth } = require("./middleware/auth");
 const app = express();
 const cookieParser = require("cookie-parser");
+const cors = require('cors');
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
 //API to save a user
 app.post("/signup", async (req, res) => {
+  
   try {
     validatingSignUpData(req);
-    const { firstName, lastName, password, emailId, userName } = req.body;
+    const { firstName, lastName, userName, emailId,password  } = req.body;
 
     const passwordHash = await bcrypt.hash(password, 10);
 
@@ -26,6 +29,8 @@ app.post("/signup", async (req, res) => {
       emailId,
       password: passwordHash,
     });
+   
+    
     await user.save();
     res.status(200).send("Data saved successfully");
   } catch (err) {
@@ -48,8 +53,8 @@ app.post("/login", async (req, res) => {
         expiresIn: "1d",
       });
 
-      res.cookie("token", token); //first token is name of the token at the clients side
-      res.send("loggedin succesfully");
+      res.cookie("token", token,{ httpOnly: true }); //first token is name of the token at the clients side
+      res.json({token});
     } else {
       throw new Error("Invalid credential");
     }
