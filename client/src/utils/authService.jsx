@@ -6,7 +6,7 @@ export const signUp = async (userData) => {
     const response = await api.post('/signup', userData);
     return response.data;
   } catch (error) {
-    throw error.response.data; // Send the error message to the caller
+    throw error.response.data; 
   }
 };
 
@@ -15,8 +15,8 @@ export const login = async (userData) => {
     
     
     const response = await api.post('/login', userData);
-    return response.data; // Handle successful login response
+    return response.data; 
   } catch (error) {
-    throw error.response.data; // Send the error message to the caller
+    throw error.response.data; 
   }
 };

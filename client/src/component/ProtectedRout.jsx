@@ -1,11 +1,11 @@
 // ProtectedRoute.jsx
 import { Navigate } from "react-router-dom";
-import Cookies from "js-cookie"; // Make sure you have this package installed
+import Cookies from "js-cookie"; 
 
 const ProtectedRoute = ({children}) => {
   const token = Cookies.get("token") 
   
-  return token ? children : <Navigate to="/" />; // Redirect to login if no token
+  return token ? children : <Navigate to="/" />; 
 };
 
 export default ProtectedRoute;

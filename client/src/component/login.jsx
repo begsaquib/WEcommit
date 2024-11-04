@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import { login } from "../utils/authService"; // Adjust the path based on your project structure
+import { Link, useNavigate } from "react-router-dom"; 
+import { login } from "../utils/authService"; 
 import Cookies from "js-cookie";
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -23,9 +23,9 @@ const Login = () => {
       
       
       Cookies.set("token",response.token)
-      navigate("/home"); // Redirect to home page upon success
+      navigate("/home"); 
     } catch (error) {
-      setError(error); // Set the error message to display
+      setError(error); 
     }
   };
 
@@ -38,10 +38,10 @@ const Login = () => {
         >
           <h2 className="mb-6 text-2xl font-bold">Login</h2>
           {error && <p className="text-red-500">{error}</p>}{" "}
-          {/* Display error message */}
+         
           <input
             type="text"
-            name="userName" // Change name from 'username' to 'userName'
+            name="userName" 
             placeholder="Username"
             value={formData.userName}
             onChange={handleChange}

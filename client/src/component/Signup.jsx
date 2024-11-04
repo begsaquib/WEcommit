@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import { signUp } from "../utils/authService"; // Adjust the path based on your project structure
+import { Link, useNavigate } from "react-router-dom"; 
+import { signUp } from "../utils/authService"; 
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -11,8 +11,8 @@ const SignupPage = () => {
     userName: "",
   });
 
-  const [error, setError] = useState(""); // State for handling errors
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const [error, setError] = useState(""); 
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,10 +23,10 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      await signUp(formData); // Call the signUp function
-      navigate("/"); // Redirect to home page upon success
+      await signUp(formData); 
+      navigate("/"); 
     } catch (error) {
-      setError(error); // Set the error message to display
+      setError(error);
     }
   };
 
@@ -37,7 +37,7 @@ const SignupPage = () => {
           <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
           <form onSubmit={handleSubmit}>
             {error && <p className="text-red-500 mb-4">{error}</p>}{" "}
-            {/* Display error message */}
+          
             <div className="mb-4">
               <label className="block text-gray-700 mb-1" htmlFor="firstName">
                 First Name
@@ -85,9 +85,9 @@ const SignupPage = () => {
               </label>
               <input
                 type="email"
-                id="emailId" // Update the ID to match the name
-                name="emailId" // Change name to emailId
-                value={formData.emailId} // Bind the state to emailId
+                id="emailId" 
+                name="emailId" 
+                value={formData.emailId} 
                 onChange={handleChange}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required

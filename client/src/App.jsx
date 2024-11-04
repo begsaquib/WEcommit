@@ -20,7 +20,7 @@ const LayoutWithoutHeader = () => <Outlet />;
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <LayoutWithoutHeader />, // No header for login and signup
+    element: <LayoutWithoutHeader />, 
     children: [
       {
         path: "/",
@@ -34,7 +34,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/",
-    element: <LayoutWithHeader />, // Header will appear on these routes
+    element: <LayoutWithHeader />, 
     children: [
       {
         path: "/home",
@@ -50,7 +50,7 @@ const appRouter = createBrowserRouter([
           <ProtectedRoute>
             <MemberInfoPage />
           </ProtectedRoute>
-        ), // Protect the Team Info route
+        ),
       },
     ],
   },

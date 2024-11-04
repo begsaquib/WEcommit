@@ -15,12 +15,12 @@ const MemberInfo = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setNewMemberName(""); // Reset input field
+    setNewMemberName("");
   };
 
   const handleAddMemberSubmit = () => {
     if (newMemberName.trim()) {
-      // Split the name into first and last names for demonstration
+     
       const [firstName, lastName] = newMemberName.trim().split(" ");
       setMembers([
         ...members,

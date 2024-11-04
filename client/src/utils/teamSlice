@@ -3,17 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const teamSlice = createSlice({
   name: "team",
   initialState: {
-    members: [], // Store the list of team members
+    members: [], 
   },
   reducers: {
     setMembers: (state, action) => {
-      state.members = action.payload; // Set the members from an API call
+      state.members = action.payload; 
     },
     addMember: (state, action) => {
-      state.members.push(action.payload); // Add a new member
+      state.members.push(action.payload); 
     },
     removeMember: (state, action) => {
-      state.members = state.members.filter(member => member.userName !== action.payload); // Remove a member by username
+      state.members = state.members.filter(member => member.userName !== action.payload); 
     },
   },
 });

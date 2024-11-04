@@ -171,35 +171,35 @@ app.post("/teams/:teamId/addMember", userAuth, async (req, res) => {
   }
 });
 
-//testing
+
 app.get('/:teamName/check-membership', userAuth, async (req, res) => {
   try {
-    // Extract the team name from the request parameters
+    
     const { teamName } = req.params;
-    // Get the username from the authenticated user
-    const userName = req.user.userName; // Assuming userAuth middleware attaches the user to req
+    
+    const userName = req.user.userName; 
 
-    // Log the username for debugging purposes
+    
     console.log(`Checking membership for user: ${userName} in team: ${teamName}`);
 
-    // Find the team by its name
+   
     const team = await Team.findOne({ name: teamName });
-    // Check if the team exists
+    
     if (!team) {
       return res.status(404).json({ message: 'Team not found' });
     }
 
-    // Check if the user is a member of the team
+   
     const isMember = team.members.includes(userName);
 
-    // Respond based on membership status
+    
     if (isMember) {
       return res.status(200).json({ message: 'User is a member of the team' });
     } else {
       return res.status(403).json({ message: 'User is not a member of the team' });
     }
   } catch (error) {
-    // Handle any unexpected errors
+    
     console.error('Error checking team membership:', error);
     return res.status(500).json({ message: 'Server error', error: error.message });
   }

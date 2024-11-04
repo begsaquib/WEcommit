@@ -1,6 +1,6 @@
 import {  useState } from "react";
-import useFetchTeams from "../hooks/useFetchTeams"; // Your custom hook to fetch teams
-import api from "../utils/api"; // Your API utility for axios
+import useFetchTeams from "../hooks/useFetchTeams"; 
+import api from "../utils/api"; 
 import Cookies from "js-cookie";
 import {  useNavigate } from "react-router-dom";
 const HomePage = () => {
@@ -36,15 +36,15 @@ const HomePage = () => {
   const handleTeamClick = async (team) => {
     try {
      
-      // Make an API request to check if the user is a member of the team
+     
       const response = await api.get(`/${team.name}/check-membership`, {
         headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`, // Include the token for authentication
+          Authorization: `Bearer ${Cookies.get("token")}`,
         },
       });
   
       if (response.status === 200 && response.data.message === "User is a member of the team") {
-        navigate(`/team/${team.name}`); // Navigate to the team details page by team name
+        navigate(`/team/${team.name}`); 
       } else {
         setAlertMessage("You do not have access to this team.");
         setShowAlert(true);
