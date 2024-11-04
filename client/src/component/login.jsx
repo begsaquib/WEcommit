@@ -20,7 +20,7 @@ const Login = () => {
 
     try {
       const response = await login(formData); 
-      console.log(response);
+      
       
       Cookies.set("token",response.token)
       navigate("/home"); // Redirect to home page upon success

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const TeamInfo = () => {
+const MemberInfo = () => {
   const [showModal, setShowModal] = useState(false);
   const [members, setMembers] = useState([
     { id: 1, username: "Alice", firstName: "Alice", lastName: "Smith" },
@@ -80,4 +80,4 @@ const TeamInfo = () => {
   );
 };
 
-export default TeamInfo;
+export default MemberInfo;

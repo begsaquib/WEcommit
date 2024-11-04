@@ -1,0 +1,22 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const teamSlice = createSlice({
+  name: "team",
+  initialState: {
+    members: [], // Store the list of team members
+  },
+  reducers: {
+    setMembers: (state, action) => {
+      state.members = action.payload; // Set the members from an API call
+    },
+    addMember: (state, action) => {
+      state.members.push(action.payload); // Add a new member
+    },
+    removeMember: (state, action) => {
+      state.members = state.members.filter(member => member.userName !== action.payload); // Remove a member by username
+    },
+  },
+});
+
+export const { setMembers, addMember, removeMember } = teamSlice.actions;
+export default teamSlice.reducer;

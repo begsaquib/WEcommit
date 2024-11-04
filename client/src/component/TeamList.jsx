@@ -1,47 +1,88 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {  useState } from "react";
+import useFetchTeams from "../hooks/useFetchTeams"; // Your custom hook to fetch teams
+import api from "../utils/api"; // Your API utility for axios
+import Cookies from "js-cookie";
+import {  useNavigate } from "react-router-dom";
+const HomePage = () => {
+  const { teams, loading, error } = useFetchTeams();
+  const [showModal, setShowModal] = useState(false);
+  const [newTeamName, setNewTeamName] = useState("");
+  const navigate = useNavigate()
+  const [alertMessage, setAlertMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
-
-const Home = () => {
-  const [teams, setTeams] = useState(['Team Alpha', 'Team Beta', 'Team Gamma']); // Dummy array of team names
-  const [newTeamName, setNewTeamName] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-   const navigate=useNavigate()
-  const addTeam = () => {
-    if (newTeamName.trim() !== '') {
-      setTeams([...teams, newTeamName.trim()]);
-      setNewTeamName(''); // Clear the input
-      setIsModalOpen(false); // Close the modal
+  // Function to handle adding a new team
+  const handleAddTeam = async () => {
+    try {
+      const token = Cookies.get("token");
+      const response = await api.post(
+        "/teams/create",
+        { name: newTeamName }, // Send the new team name in the body
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass the token
+          },
+        }
+      );
+      // Assuming the response includes the new team object
+      const newTeam = response.data.team; // Adjust according to your API response
+      teams.push(newTeam); // Add new team to the existing teams array
+      setNewTeamName(""); // Reset input field
+      setShowModal(false); // Close modal
+    } catch (err) {
+      console.error("Error adding team:", err);
     }
   };
-  const goToTeamInfo = (teamName) => {
-    navigate(`/team/${teamName}`); // Navigate to TeamInfo with team name
+  const handleTeamClick = async (team) => {
+    try {
+     
+      // Make an API request to check if the user is a member of the team
+      const response = await api.get(`/${team.name}/check-membership`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`, // Include the token for authentication
+        },
+      });
+  
+      if (response.status === 200 && response.data.message === "User is a member of the team") {
+        navigate(`/team/${team.name}`); // Navigate to the team details page by team name
+      } else {
+        setAlertMessage("You do not have access to this team.");
+        setShowAlert(true);
+      }
+    } catch (error) {
+      console.error("Error checking team membership:", error);
+      setAlertMessage("Error verifying access to the team.");
+      setShowAlert(true);
+    }
   };
+  
 
   return (
-    <div className="flex-1 p-6 bg-gray-100">
-      <header className="bg-blue-600 p-4 text-white flex justify-between items-center mb-4">
-        <h1 className="text-2xl">Teams</h1>
-        <button
-          onClick={() => setIsModalOpen(true)} // Open the modal
-          className="bg-white text-blue-600 px-4 py-2 rounded"
-        >
-          Add Team
-        </button>
-      </header>
-      <main className="">
-        {teams.map((team, index) => (
-          <div key={index} className="bg-white p-4 m-2 rounded shadow"  onClick={() => goToTeamInfo(team)}>
-            <h2 className="text-xl font-semibold">{team}</h2>
+    <div className="p-4 flex flex-col items-center w-full bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold mb-4">Teams</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+        {teams.map((team) => (
+          <div onClick={() => handleTeamClick(team)} key={team._id} className="p-4 bg-white rounded-lg shadow-lg flex flex-col items-center">
+
+            <h2 className="font-bold text-lg">{team.name}</h2>
           </div>
         ))}
-      </main>
+      </div>
 
-      {/* Modal for adding a new team */}
-      {isModalOpen && (
+      <button
+        onClick={() => setShowModal(true)}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Add Team
+      </button>
+
+      {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-md w-1/3">
-            <h2 className="text-xl mb-4">Add New Team</h2>
+          <div className="bg-white p-6 rounded shadow-lg w-1/2">
+            <h2 className="text-xl font-bold mb-2">Add New Team</h2>
             <input
               type="text"
               value={newTeamName}
@@ -49,18 +90,18 @@ const Home = () => {
               placeholder="Enter team name"
               className="border p-2 w-full mb-4"
             />
-            <div className="flex justify-between">
+            <div className="flex justify-end">
               <button
-                onClick={addTeam}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
-              >
-                Add
-              </button>
-              <button
-                onClick={() => setIsModalOpen(false)} // Close the modal
-                className="bg-gray-300 px-4 py-2 rounded"
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-500 text-white rounded mr-2 hover:bg-gray-600"
               >
                 Cancel
+              </button>
+              <button
+                onClick={handleAddTeam}
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Add
               </button>
             </div>
           </div>
@@ -70,4 +111,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

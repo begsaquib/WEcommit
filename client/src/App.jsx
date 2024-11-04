@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import store from "./utils/store";
 import Header from "./component/header";
 import Home from "./component/homepage";
-import TeamInfoPage from "./component/teamInfoPage";
 import ProtectedRoute from "./component/ProtectedRout";
+import MemberInfoPage from "./component/teamInfoPage";
 
 const LayoutWithHeader = () => (
   <div>
@@ -48,7 +48,7 @@ const appRouter = createBrowserRouter([
         path: "team/:teamname",
         element: (
           <ProtectedRoute>
-            <TeamInfoPage />
+            <MemberInfoPage />
           </ProtectedRoute>
         ), // Protect the Team Info route
       },

@@ -12,7 +12,7 @@ export const signUp = async (userData) => {
 
 export const login = async (userData) => {
   try {
-    console.log(userData);
+    
     
     const response = await api.post('/login', userData);
     return response.data; // Handle successful login response

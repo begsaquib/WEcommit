@@ -2,7 +2,11 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const userAuth = async (req, res,next) => {
   try {
-    const { token } = req.cookies;
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]; 
+    // const { token } = req.cookies;
+    console.log(token);
+    
     if (!token) {
       throw new Error("token not found!!!");
     }
@@ -11,6 +15,8 @@ const userAuth = async (req, res,next) => {
     const { _id } = decodedobj;
 
     const user = await User.findById(_id);
+    console.log(user);
+    
     if (!user) {
       throw new Error("User not found");
     }

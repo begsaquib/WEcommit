@@ -1,14 +1,15 @@
+import MemberInfo from "./MembersInfo"
 import Sidebar from "./sidebar"
-import TeamInfo from "./teamInfo"
 
 
-const TeamInfoPage = () => {
+
+const MemberInfoPage = () => {
   return (
     <div className="flex">
         <Sidebar/>
-        <TeamInfo/>
+        <MemberInfo/>
     </div>
   )
 }
 
-export default TeamInfoPage
+export default MemberInfoPage

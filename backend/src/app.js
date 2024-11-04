@@ -9,6 +9,13 @@ const { userAuth } = require("./middleware/auth");
 const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
+const corsOptions = {
+  origin: 'http://localhost:5173', // Your frontend URL
+  credentials: true, // Allow credentials (cookies) to be sent
+};
+
+app.use(cors(corsOptions));
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
@@ -161,6 +168,40 @@ app.post("/teams/:teamId/addMember", userAuth, async (req, res) => {
     res.status(200).json({ message: "Member added successfully", team });
   } catch (err) {
     res.status(500).send("ERR07: " + err.message);
+  }
+});
+
+//testing
+app.get('/:teamName/check-membership', userAuth, async (req, res) => {
+  try {
+    // Extract the team name from the request parameters
+    const { teamName } = req.params;
+    // Get the username from the authenticated user
+    const userName = req.user.userName; // Assuming userAuth middleware attaches the user to req
+
+    // Log the username for debugging purposes
+    console.log(`Checking membership for user: ${userName} in team: ${teamName}`);
+
+    // Find the team by its name
+    const team = await Team.findOne({ name: teamName });
+    // Check if the team exists
+    if (!team) {
+      return res.status(404).json({ message: 'Team not found' });
+    }
+
+    // Check if the user is a member of the team
+    const isMember = team.members.includes(userName);
+
+    // Respond based on membership status
+    if (isMember) {
+      return res.status(200).json({ message: 'User is a member of the team' });
+    } else {
+      return res.status(403).json({ message: 'User is not a member of the team' });
+    }
+  } catch (error) {
+    // Handle any unexpected errors
+    console.error('Error checking team membership:', error);
+    return res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 

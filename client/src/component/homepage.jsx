@@ -4,7 +4,7 @@ import TeamName from "./TeamList"
 
 
 const Home = () => {
-  console.log("homepage rendered");
+  
   
   return (
     
