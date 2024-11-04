@@ -4,8 +4,8 @@ import { login } from "../utils/authService";
 import Cookies from "js-cookie";
 const Login = () => {
   const [formData, setFormData] = useState({
-    userName: "Maxy",
-    password: "Maxy@123",
+    userName: "",
+    password: "",
   });
 
   const [error, setError] = useState("");
