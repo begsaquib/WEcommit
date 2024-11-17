@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
-import { login } from "../utils/authService"; 
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../utils/authService";
 import Cookies from "js-cookie";
 const Login = () => {
-  const [formData, setFormData] = useState({
-    userName: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ userName: "", password: "" });
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -19,13 +16,12 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await login(formData); 
-      
-      
-      Cookies.set("token",response.token)
-      navigate("/home"); 
+      const response = await login(formData);
+
+      Cookies.set("token", response.token);
+      navigate("/home");
     } catch (error) {
-      setError(error); 
+      setError(error);
     }
   };
 
@@ -38,10 +34,9 @@ const Login = () => {
         >
           <h2 className="mb-6 text-2xl font-bold">Login</h2>
           {error && <p className="text-red-500">{error}</p>}{" "}
-         
           <input
             type="text"
-            name="userName" 
+            name="userName"
             placeholder="Username"
             value={formData.userName}
             onChange={handleChange}

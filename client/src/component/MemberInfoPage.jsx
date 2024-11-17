@@ -4,6 +4,7 @@ import Sidebar from "./sidebar"
 
 
 const MemberInfoPage = () => {
+  
   return (
     <div className="flex">
         <Sidebar/>
@@ -12,4 +13,4 @@ const MemberInfoPage = () => {
   )
 }
 
-export default MemberInfoPage
+export default MemberInfoPage;

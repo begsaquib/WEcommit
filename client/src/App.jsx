@@ -4,9 +4,9 @@ import SignupPage from "./component/Signup";
 import { Provider } from "react-redux";
 import store from "./utils/store";
 import Header from "./component/header";
-import Home from "./component/homepage";
 import ProtectedRoute from "./component/ProtectedRout";
-import MemberInfoPage from "./component/teamInfoPage";
+import TeamNamePage from "./component/TeamNamePage";
+import MemberInfoPage from "./component/MemberInfoPage";
 
 const LayoutWithHeader = () => (
   <div>
@@ -20,7 +20,7 @@ const LayoutWithoutHeader = () => <Outlet />;
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <LayoutWithoutHeader />, 
+    element: <LayoutWithoutHeader />,
     children: [
       {
         path: "/",
@@ -34,21 +34,21 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/",
-    element: <LayoutWithHeader />, 
+    element: <LayoutWithHeader />,
     children: [
       {
         path: "/home",
         element: (
           <ProtectedRoute>
-            <Home />
+            <TeamNamePage />
           </ProtectedRoute>
-        ), 
+        ),
       },
       {
         path: "team/:teamname",
         element: (
           <ProtectedRoute>
-            <MemberInfoPage />
+            <MemberInfoPage/>
           </ProtectedRoute>
         ),
       },

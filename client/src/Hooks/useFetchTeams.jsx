@@ -23,7 +23,7 @@ const useFetchTeams = () => {
           },
         });
     
-        console.log("Response data:", response.data); 
+       
         setTeams(response.data.teams || []);
       } catch (err) {
         console.error("Error fetching teams:", err);
